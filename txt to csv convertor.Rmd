@@ -1,0 +1,44 @@
+---
+title: "txt to csv convertor"
+output: html_document
+date: "2026-10-07"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+```
+
+# Instructions
+1. Make sure to set the R Studio Session to the file which contains the TXT files you want to convert into CSV files. Go to tab "Session" > "Set Working Directory" > "Choose Directory" and select your desired folder path.
+
+2. Make a change to line 31 in the code, replacing "csv destination" with the name of your folder where you want the CSV files output. This folder should be one pathway outside of your session so that it does not get in the way of reading the txt files.
+
+3. You're done! Click the "Run" Button in the top right to generate your csv files.
+
+Important Notes: 
+
+a). TXT files will maintain their original name just with a ".csv" instead of a ".txt". 
+b). Your original TXT files will stay completely untouched, the code will not replace them, only read and make copies to be stored elsewhere.
+c). Only run code ONCE, unless you want duplicates of the csv files.
+
+# Code
+```{r}
+#Reading all files in the session
+file.names <- list.files()
+
+#Creating Variable with the number "N" of files in the folder
+N <- length(file.names)
+
+#For every file in the folder, read name, translate to csv, rename file (.csv), and output csv file in desired folder
+for (i in 1:N) {
+  name.txt <- file.names[i]
+  csv.temp <- read.table(name.txt,header=TRUE, sep= ",")
+  str_sub(name.txt, -4,-1) <- ".csv"
+  write.csv(csv.temp, paste0("../csv destination/", name.txt), row.names = FALSE)
+}
+```
+
+
+
